@@ -60,8 +60,8 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - run: |
-	    echo "job test submitted"
-	    sleep 10
+            echo "job test submitted"
+            sleep 10
           shell: bash
 
     stoplm3runner:
