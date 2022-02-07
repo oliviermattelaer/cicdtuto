@@ -50,20 +50,18 @@ jobs:
          run: echo "::set-output name=test::${SLURM_JOB_ID}"
        - id: check_secret
          run: echo ${{ secrets.MYNAME }}
-       - id: check_secret2	 
-         run: echo MATTELAER
+       - id: check_secret
+         run: echo Matelaer	 
         
     actualwork:
       runs-on: lemaitre3
       needs: checklm3runnerstatus 
-      name: A job to say hello
+      name: A test job 
       steps:
         - uses: actions/checkout@v2
-        - id: foo
-          uses: ./.github/unnitest
-          with:
-            who-to-greet: 'Mona the Octocat'
-        - run: echo random-number ${{ steps.foo.outputs.random-number }}
+        - run: |
+	    echo "job test submitted"
+	    sleep 10
           shell: bash
 
     stoplm3runner:
