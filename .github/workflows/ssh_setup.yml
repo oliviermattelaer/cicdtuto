@@ -1,0 +1,53 @@
+# This is a basic workflow to help you get started with Actions
+
+name: sync with bazaar
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the 3.4.0 branch
+  push:
+    branches: [ master ]
+    paths-ignore:
+      - 'docs/**'
+      - '.github/**'
+      
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+     - name: Install SSH key
+       uses: shimataro/ssh-key-action@v2
+       with:
+         key: ${{ secrets.CECI_KEY }}
+         name: id_rsa.ceci # optional
+         known_hosts: |
+           gwceci.cism.ucl.ac.be ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGBlvDUHE7OlmvDCJy9QSKjqfeJ/CYAhT2PU2zYoFRkT   
+           lemaitre3.cism.ucl.ac.be ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKe01E26qJYGysz3Cgp8upzHaUJYvoIBzkWlRTfYt2yP
+           lemaitre3,130.104.1.207 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNiz3FYBVj9qu3DfunHx5UKgW1+LR1rI4y3iMXMhLw+xm2eRXj6ksn24C1Z5tHEpeJrawIghBOrTE/G96bcDqdU=
+           nic5,nic5.segi.ulg.ac.be ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAADdoDT+Vh/tGac7RzkKAUvPWQrwH7aOfRX32C+CXHF2ebuXPmayrq3jZSWItrEaAnxpwJWwRCN6HIjihqHSg1dMgA5GRBjNrKCWoirTRJR/6WMTWHrRS5ZQG5xrKgKQdAMiJtjukUd85t5jz7PJSn7KWKrI9AoM+Y2UN4ZpgodXF5jOQ==  
+         config: |
+           Host *
+            ServerAliveInterval 300
+            ServerAliveCountMax 2
+           Host gwceci
+            Hostname gwceci.cism.ucl.ac.be
+            User omatt
+            ForwardAgent yes
+            IdentityFile ~/.ssh/id_rsa.ceci
+           Host dragon2 hmem lemaitre3 hercules dragon1 vega nic4 manneback mb zenobe nic5 ingrid zenobe
+            User omatt
+            ForwardAgent yes
+            IdentityFile ~/.ssh/id_rsa.ceci
+            ProxyJump gwceci
+         if_key_exists: ignore # replace / ignore / fail; optional (defaults to fail)
+     - name: srun test
+       run: ssh lemaitre3 srun hostname
+
