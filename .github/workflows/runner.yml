@@ -51,7 +51,7 @@ jobs:
        - id: check_secret
          run: echo ${{ secrets.MYNAME }}
        - id: check_secret2
-         run: echo Matelaer	 
+         run: echo Mattelaer	 
         
     actualwork:
       runs-on: lemaitre3
