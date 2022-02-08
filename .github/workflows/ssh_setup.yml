@@ -53,5 +53,5 @@ jobs:
      - name: test secret suppression in log
        run: |
         echo ${{ secret.MYNAME }}
-	echo "MATTELAER"
-	echo MATTELAEROLIVIER
+        echo "MATTELAER"
+        echo MATTELAEROLIVIER
