@@ -48,11 +48,7 @@ jobs:
       steps:
        - id: step1
          run: echo "::set-output name=test::${SLURM_JOB_ID}"
-       - id: check_secret
-         run: echo ${{ secrets.MYNAME }}
-       - id: check_secret2
-         run: echo Mattelaer	 
-        
+
     actualwork:
       runs-on: lemaitre3
       needs: checklm3runnerstatus 

@@ -50,4 +50,10 @@ jobs:
          if_key_exists: ignore # replace / ignore / fail; optional (defaults to fail)
      - name: srun test
        run: ssh lemaitre3 srun hostname
+     - name: test secret suppression in log
+       run: |
+        echo ${{ secret.MYNAME }}
+	echo "MATTELAER"
+	echo MATTELAEROLIVIER
+
 
