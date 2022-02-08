@@ -52,6 +52,6 @@ jobs:
        run: ssh lemaitre3 srun hostname
      - name: test secret suppression in log
        run: |
-        echo ${{ secret.MYNAME }}
+        echo ${{ secrets.MYNAME }}
         echo "MATTELAER"
         echo MATTELAEROLIVIER
