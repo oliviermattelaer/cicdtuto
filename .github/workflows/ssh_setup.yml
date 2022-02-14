@@ -49,7 +49,7 @@ jobs:
             ProxyJump gwceci
          if_key_exists: ignore # replace / ignore / fail; optional (defaults to fail)
      - name: srun test
-       run: ssh lemaitre3 srun hostname
+       run: ssh lemaitre3 srun --reservation=omatt_33  hostname
      - name: test secret suppression in log
        run: |
         echo ${{ secrets.MYNAME }}
